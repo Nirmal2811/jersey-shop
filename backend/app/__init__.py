@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from .config import Config
@@ -12,8 +12,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # CORS(app, origins=app.config['CORS_ORIGINS'], supports_credentials=True)
-    CORS(app)
+    CORS(app, origins=app.config['CORS_ORIGINS'], supports_credentials=True)
     jwt.init_app(app)
 
     _db.init_pool(app.config['DATABASE_URL'])
@@ -34,6 +33,24 @@ def create_app():
     @jwt.revoked_token_loader
     def revoked_token_callback(jwt_header, jwt_payload):
         return jsonify({'message': 'Token has been revoked'}), 401
+
+    @app.after_request
+    def add_cors_headers(response):
+        origin = request.headers.get('Origin', '')
+        if origin in app.config['CORS_ORIGINS']:
+            response.headers['Access-Control-Allow-Origin'] = origin
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        return response
+
+    @app.errorhandler(404)
+    def not_found(e):
+        return jsonify({'message': 'Not found'}), 404
+
+    @app.errorhandler(500)
+    def server_error(e):
+        return jsonify({'message': 'Internal server error'}), 500
 
     from .routes import auth_bp, products_bp, cart_bp, orders_bp, payment_bp, admin_bp
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
