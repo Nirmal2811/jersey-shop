@@ -66,7 +66,8 @@ def get_products():
     )
 
     return jsonify({
-        'products': [product_to_dict(r) for r in rows],
+        # 'products': [product_to_dict(r) for r in rows],
+        'products': [dict(r) for r in rows],
         'total': total,
         'page': page,
         'pages': math.ceil(total / per_page) if total else 0,
