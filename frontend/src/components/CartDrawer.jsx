@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react'
 import { closeCart } from '../store/slices/uiSlice'
 import { removeFromCart, updateQuantity, selectCartTotal } from '../store/slices/cartSlice'
+import { getMediaUrl } from '../services/api'
 
 export default function CartDrawer() {
   const dispatch = useDispatch()
@@ -68,7 +69,7 @@ export default function CartDrawer() {
                     <li key={item.key} className="p-4 flex gap-4">
                       <Link to={`/products/${item.product.id}`} onClick={() => dispatch(closeCart())}>
                         <img
-                          src={item.product.image_url || `https://picsum.photos/seed/${item.product.id}/120/160`}
+                          src={getMediaUrl(item.product.image_url) || `https://picsum.photos/seed/${item.product.id}/120/160`}
                           alt={item.product.name}
                           className="w-20 h-28 object-cover bg-gray-50"
                         />

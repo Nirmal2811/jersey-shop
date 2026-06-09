@@ -11,7 +11,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
   PieChart, Pie, Cell,
 } from 'recharts'
-import api from '../../services/api'
+import api, { getMediaUrl } from '../../services/api'
 
 const STATUS_COLORS = {
   pending:    'bg-yellow-100 text-yellow-700',
@@ -210,7 +210,7 @@ function LowStockModal({ products, onClose }) {
                   <div key={p.id} className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors">
                     <span className={`w-2 h-2 rounded-full flex-shrink-0 ${dot}`} />
                     {p.image_url
-                      ? <img src={p.image_url} alt="" className="w-9 h-9 object-cover rounded bg-gray-100 flex-shrink-0" />
+                      ? <img src={getMediaUrl(p.image_url)} alt="" className="w-9 h-9 object-cover rounded bg-gray-100 flex-shrink-0" />
                       : <div className="w-9 h-9 bg-gray-100 rounded flex-shrink-0" />}
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-semibold leading-tight truncate">{p.name}</p>

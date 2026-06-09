@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Plus, Edit2, Trash2, X, GripVertical, Eye, EyeOff } from 'lucide-react'
 import ImageUpload from '../components/ImageUpload'
-import api from '../../services/api'
+import api, { getMediaUrl } from '../../services/api'
 
 const BG_OPTIONS = [
   { label: 'Dark', value: 'from-gray-900 via-gray-800 to-black' },
@@ -69,7 +69,7 @@ function SlideModal({ slide, onClose, onSaved }) {
           {/* Live mini preview */}
           <div className={`relative rounded overflow-hidden h-24 bg-gradient-to-r ${form.bg_color} flex items-center px-5 gap-4`}>
             {form.image_url && (
-              <img src={form.image_url} alt="" className="absolute right-0 top-0 h-full w-40 object-cover opacity-40" />
+              <img src={getMediaUrl(form.image_url)} alt="" className="absolute right-0 top-0 h-full w-40 object-cover opacity-40" />
             )}
             <div className="relative z-10">
               {form.badge && (
@@ -235,7 +235,7 @@ export default function AdminBanners() {
               {/* Mini preview strip */}
               <div className={`w-40 h-28 bg-gradient-to-r ${slide.bg_color} flex-shrink-0 relative overflow-hidden`}>
                 {slide.image_url && (
-                  <img src={slide.image_url} alt="" className="absolute inset-0 w-full h-full object-cover opacity-40" />
+                  <img src={getMediaUrl(slide.image_url)} alt="" className="absolute inset-0 w-full h-full object-cover opacity-40" />
                 )}
                 <div className="absolute inset-0 flex flex-col justify-center px-3">
                   {slide.badge && (

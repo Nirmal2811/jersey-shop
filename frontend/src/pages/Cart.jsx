@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Trash2, Minus, Plus, ShoppingBag, ArrowLeft, Tag } from 'lucide-react'
 import { removeFromCart, updateQuantity, selectCartTotal } from '../store/slices/cartSlice'
+import { getMediaUrl } from '../services/api'
 
 export default function Cart() {
   const dispatch = useDispatch()
@@ -50,7 +51,7 @@ export default function Cart() {
               >
                 <Link to={`/products/${item.product.id}`}>
                   <img
-                    src={item.product.image_url || `https://picsum.photos/seed/${item.product.id}/200/260`}
+                    src={getMediaUrl(item.product.image_url) || `https://picsum.photos/seed/${item.product.id}/200/260`}
                     alt={item.product.name}
                     className="w-24 h-32 md:w-28 md:h-36 object-cover bg-gray-50"
                   />

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { ShieldCheck, Truck, RefreshCw, Headphones } from 'lucide-react'
 import CategoryCircles from '../components/CategoryCircles'
 import FeaturedProducts from '../components/FeaturedProducts'
-import api from '../services/api'
+import api, { getMediaUrl } from '../services/api'
 
 const TRUST_BADGES = [
   { icon: ShieldCheck, label: '100% AUTHENTIC', sub: 'Official licensed jerseys' },
@@ -61,10 +61,10 @@ function BannerSplit({ b }) {
       <div className="md:hidden bg-white px-3 pt-3">
         <div className="flex gap-3" style={{ height: '62vw' }}>
           <div className="flex-1 overflow-hidden">
-            <img src={b.image1_url} alt="" className="w-full h-full object-cover object-top" />
+            <img src={getMediaUrl(b.image1_url)} alt="" className="w-full h-full object-cover object-top" />
           </div>
           <div className="flex-1 overflow-hidden">
-            <img src={b.image2_url || b.image1_url} alt="" className="w-full h-full object-cover object-top" />
+            <img src={getMediaUrl(b.image2_url || b.image1_url)} alt="" className="w-full h-full object-cover object-top" />
           </div>
         </div>
         <MobileTextBlock b={b} />
@@ -73,7 +73,7 @@ function BannerSplit({ b }) {
       {/* Desktop */}
       <div className="hidden md:flex items-stretch min-h-[480px]">
         <div className="w-[30%] relative overflow-hidden flex-shrink-0">
-          <img src={b.image1_url} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
+          <img src={getMediaUrl(b.image1_url)} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
         </div>
         <div className="flex-1 flex flex-col items-center justify-center text-center px-8 py-14 z-10 relative">
           {b.badge && (
@@ -101,7 +101,7 @@ function BannerSplit({ b }) {
           </div>
         </div>
         <div className="w-[30%] relative overflow-hidden flex-shrink-0">
-          <img src={b.image2_url} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
+          <img src={getMediaUrl(b.image2_url)} alt="" className="absolute inset-0 w-full h-full object-cover object-top" />
         </div>
       </div>
     </section>
@@ -115,14 +115,14 @@ function BannerFullWidth({ b }) {
       {/* Mobile */}
       <div className="md:hidden">
         <div className="h-[260px] overflow-hidden">
-          <img src={b.image1_url} alt={b.title} className="w-full h-full object-cover object-top" />
+          <img src={getMediaUrl(b.image1_url)} alt={b.title} className="w-full h-full object-cover object-top" />
         </div>
         <MobileTextBlock b={b} />
       </div>
 
       {/* Desktop */}
       <div className="hidden md:block relative" style={{ minHeight: 480 }}>
-        <img src={b.image1_url} alt={b.title} className="absolute inset-0 w-full h-full object-cover object-center" />
+        <img src={getMediaUrl(b.image1_url)} alt={b.title} className="absolute inset-0 w-full h-full object-cover object-center" />
         <div className="relative z-10 flex flex-col justify-center h-full min-h-[480px] px-10 max-w-lg">
           {b.badge && (
             <p className="text-[11px] font-black tracking-[0.2em] text-gray-600 mb-2 uppercase">{b.badge}</p>
@@ -148,14 +148,14 @@ function BannerThreePanel({ b }) {
         {/* Mosaic: 1 tall image left + 2 stacked images right */}
         <div className="flex gap-[3px] bg-white px-3 pt-3" style={{ height: '82vw' }}>
           <div className="flex-[1.1] overflow-hidden">
-            <img src={b.image1_url} alt="" className="w-full h-full object-cover object-top" />
+            <img src={getMediaUrl(b.image1_url)} alt="" className="w-full h-full object-cover object-top" />
           </div>
           <div className="flex-1 flex flex-col gap-[3px]">
             <div className="flex-1 overflow-hidden">
-              <img src={b.image2_url} alt="" className="w-full h-full object-cover object-top" />
+              <img src={getMediaUrl(b.image2_url)} alt="" className="w-full h-full object-cover object-top" />
             </div>
             <div className="flex-1 overflow-hidden">
-              <img src={b.image3_url} alt="" className="w-full h-full object-cover object-top" />
+              <img src={getMediaUrl(b.image3_url)} alt="" className="w-full h-full object-cover object-top" />
             </div>
           </div>
         </div>
@@ -175,13 +175,13 @@ function BannerThreePanel({ b }) {
       {/* Desktop */}
       <div className="hidden md:flex h-[480px]">
         <div className="w-1/3 overflow-hidden">
-          <img src={b.image1_url} alt="" className="w-full h-full object-cover" />
+          <img src={getMediaUrl(b.image1_url)} alt="" className="w-full h-full object-cover" />
         </div>
         <div className="w-1/3 overflow-hidden">
-          <img src={b.image2_url} alt="" className="w-full h-full object-fill" />
+          <img src={getMediaUrl(b.image2_url)} alt="" className="w-full h-full object-fill" />
         </div>
         <div className="w-1/3 relative overflow-hidden flex flex-col justify-end">
-          <img src={b.image3_url} alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <img src={getMediaUrl(b.image3_url)} alt="" className="absolute inset-0 w-full h-full object-cover" />
           <div className="relative z-10 p-8 text-right">
             {b.badge && <p className="text-[10px] font-black tracking-widest text-white/60 mb-2 uppercase">{b.badge}</p>}
             <h3 className="font-black text-3xl text-white leading-tight mb-1">{b.title}</h3>

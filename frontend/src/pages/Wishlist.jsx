@@ -5,6 +5,7 @@ import { Heart, ShoppingBag, X } from 'lucide-react'
 import { toggleWishlist } from '../store/slices/wishlistSlice'
 import { addToCart } from '../store/slices/cartSlice'
 import { openCart, showToast } from '../store/slices/uiSlice'
+import { getMediaUrl } from '../services/api'
 
 export default function Wishlist() {
   const dispatch = useDispatch()
@@ -47,7 +48,7 @@ export default function Wishlist() {
                 <Link to={`/products/${product.id}`}>
                   <div className="relative overflow-hidden bg-gray-50 aspect-[3/4]">
                     <img
-                      src={product.image_url || `https://picsum.photos/seed/${product.id}/400/530`}
+                      src={getMediaUrl(product.image_url) || `https://picsum.photos/seed/${product.id}/400/530`}
                       alt={product.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

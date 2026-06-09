@@ -9,7 +9,7 @@ import {
 import { addToCart } from '../store/slices/cartSlice'
 import { toggleWishlist, selectIsWishlisted } from '../store/slices/wishlistSlice'
 import { openCart, showToast } from '../store/slices/uiSlice'
-import api from '../services/api'
+import api, { getMediaUrl } from '../services/api'
 import ProductCard from '../components/ProductCard'
 
 /* ── Lightbox ── */
@@ -203,7 +203,7 @@ export default function ProductDetail() {
     )
   }
 
-  const images = product.images?.length ? product.images : (product.image_url ? [product.image_url] : [])
+  const images = (product.images?.length ? product.images : (product.image_url ? [product.image_url] : [])).map(getMediaUrl)
   const discount = product.original_price
     ? Math.round(((product.original_price - product.price) / product.original_price) * 100)
     : null

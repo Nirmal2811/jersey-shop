@@ -5,6 +5,7 @@ import { Heart, ShoppingBag, Star } from 'lucide-react'
 import { toggleWishlist, selectIsWishlisted } from '../store/slices/wishlistSlice'
 import { addToCart } from '../store/slices/cartSlice'
 import { openCart, showToast } from '../store/slices/uiSlice'
+import { getMediaUrl } from '../services/api'
 
 export default function ProductCard({ product }) {
   const dispatch = useDispatch()
@@ -41,7 +42,7 @@ export default function ProductCard({ product }) {
         {/* Image */}
         <div className="relative overflow-hidden bg-gray-50 aspect-[3/4]">
           <img
-            src={product.image_url || `https://picsum.photos/seed/${product.id}/600/800`}
+            src={getMediaUrl(product.image_url) || `https://picsum.photos/seed/${product.id}/600/800`}
             alt={product.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             loading="lazy"

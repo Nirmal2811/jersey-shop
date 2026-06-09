@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { ChevronRight, Lock, CreditCard, CheckCircle, Smartphone, Truck } from 'lucide-react'
 import { selectCartTotal } from '../store/slices/cartSlice'
 import { clearCart } from '../store/slices/cartSlice'
-import api from '../services/api'
+import api, { getMediaUrl } from '../services/api'
 
 const STEPS = ['Cart', 'Delivery', 'Payment', 'Confirm']
 
@@ -391,7 +391,7 @@ export default function Checkout() {
               {items.map((item) => (
                 <li key={item.key} className="flex gap-3 pt-3 first:pt-0">
                   <img
-                    src={item.product.image_url}
+                    src={getMediaUrl(item.product.image_url)}
                     alt={item.product.name}
                     className="w-14 h-18 object-cover bg-gray-100"
                     style={{ height: 72 }}

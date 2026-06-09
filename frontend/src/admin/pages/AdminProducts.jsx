@@ -1,12 +1,12 @@
 import { useEffect, useState, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { Plus, Search, Edit2, Trash2, X, ChevronLeft, ChevronRight, AlertCircle, Package } from 'lucide-react'
-import api from '../../services/api'
+import api, { getMediaUrl } from '../../services/api'
 import MultiImageUpload from '../components/MultiImageUpload'
 
 function ProductViewModal({ product, onClose, onEdit }) {
   const [activeImg, setActiveImg] = useState(0)
-  const images = product.images?.length ? product.images : (product.image_url ? [product.image_url] : [])
+  const images = (product.images?.length ? product.images : (product.image_url ? [product.image_url] : [])).map(getMediaUrl)
   const discount = product.original_price
     ? Math.round((1 - product.price / product.original_price) * 100)
     : null
@@ -545,7 +545,7 @@ export default function AdminProducts() {
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-3">
                       {p.image_url && (
-                        <img src={p.image_url} alt={p.name} className="w-10 h-10 object-cover rounded bg-gray-100 flex-shrink-0" />
+                        <img src={getMediaUrl(p.image_url)} alt={p.name} className="w-10 h-10 object-cover rounded bg-gray-100 flex-shrink-0" />
                       )}
                       <div>
                         <p className="font-semibold text-sm leading-tight line-clamp-1">{p.name}</p>

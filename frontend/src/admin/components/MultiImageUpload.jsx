@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { Plus, X, Loader, GripVertical } from 'lucide-react'
-import axios from 'axios'
+import api, { getMediaUrl } from '../../services/api'
 
 export default function MultiImageUpload({ value = [], onChange, label = 'PRODUCT IMAGES', max = 6 }) {
   const [uploading, setUploading] = useState(false)
@@ -18,9 +18,8 @@ export default function MultiImageUpload({ value = [], onChange, label = 'PRODUC
       for (const file of toUpload) {
         const form = new FormData()
         form.append('file', file)
-        const token = localStorage.getItem('token')
-        const { data } = await axios.post('/api/admin/upload', form, {
-          headers: { Authorization: `Bearer ${token}` },
+        const { data } = await api.post('/admin/upload', form, {
+          headers: { 'Content-Type': undefined },
         })
         urls.push(data.url)
       }
@@ -49,7 +48,7 @@ export default function MultiImageUpload({ value = [], onChange, label = 'PRODUC
       <div className="flex flex-wrap gap-2">
         {value.map((url, i) => (
           <div key={url + i} className="relative group w-24 h-24 flex-shrink-0">
-            <img src={url} alt="" className="w-full h-full object-cover border border-gray-200 bg-gray-100" />
+            <img src={getMediaUrl(url)} alt="" className="w-full h-full object-cover border border-gray-200 bg-gray-100" />
             {i === 0 && (
               <span className="absolute bottom-0 left-0 right-0 text-center text-[8px] font-black bg-black/70 text-white py-0.5 tracking-widest">
                 MAIN

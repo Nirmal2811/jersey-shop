@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { Upload, Link, X, Loader } from 'lucide-react'
-import api from '../../services/api'
+import api, { getMediaUrl } from '../../services/api'
 
 export default function ImageUpload({ value, onChange, label = 'IMAGE' }) {
   const [tab, setTab] = useState('upload') // 'upload' | 'url'
@@ -111,7 +111,7 @@ export default function ImageUpload({ value, onChange, label = 'IMAGE' }) {
       {value && (
         <div className="mt-2 relative inline-block">
           <img
-            src={value}
+            src={getMediaUrl(value)}
             alt="Preview"
             className="h-20 w-32 object-cover rounded border border-gray-200 bg-gray-100"
           />
