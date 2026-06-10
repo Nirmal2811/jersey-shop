@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { User, ShoppingBag, Heart, LogOut, ChevronRight, Package, X, MapPin, Phone, Mail, CreditCard, Truck, Save, Eye, EyeOff } from 'lucide-react'
 import { logout, fetchProfile } from '../store/slices/authSlice'
-import api from '../services/api'
+import api, { getMediaUrl } from '../services/api'
 
 const STATUS_COLOR = {
   delivered:  'text-green-700 bg-green-100',
@@ -107,7 +107,7 @@ function OrderModal({ order, onClose, onCancelled }) {
                 {order.items.map((item) => (
                   <div key={item.id} className="flex items-center gap-3 p-3">
                     {item.product_image
-                      ? <img src={item.product_image} alt={item.product_name} className="w-14 h-16 object-cover bg-gray-50 rounded flex-shrink-0" />
+                      ? <img src={getMediaUrl(item.product_image)} alt={item.product_name} className="w-14 h-16 object-cover bg-gray-50 rounded flex-shrink-0" />
                       : <div className="w-14 h-16 bg-gray-100 rounded flex-shrink-0 flex items-center justify-center"><Package size={20} className="text-gray-300" /></div>
                     }
                     <div className="flex-1 min-w-0">

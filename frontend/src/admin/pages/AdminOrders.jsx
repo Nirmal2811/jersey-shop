@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronLeft, ChevronRight, ChevronDown, X, Package, MapPin, Phone, Mail, CreditCard, Truck, User } from 'lucide-react'
-import api from '../../services/api'
+import api, { getMediaUrl } from '../../services/api'
 
 const STATUSES = ['', 'processing', 'shipped', 'delivered', 'cancelled']
 
@@ -118,7 +118,7 @@ function OrderDetailModal({ order, onClose, onStatusChanged }) {
               {order.items?.map((item) => (
                 <div key={item.id} className="flex items-center gap-3 p-3">
                   {item.product_image
-                    ? <img src={item.product_image} alt={item.product_name} className="w-14 h-16 object-cover bg-gray-50 rounded flex-shrink-0" />
+                    ? <img src={getMediaUrl(item.product_image)} alt={item.product_name} className="w-14 h-16 object-cover bg-gray-50 rounded flex-shrink-0" />
                     : <div className="w-14 h-16 bg-gray-100 rounded flex-shrink-0 flex items-center justify-center"><Package size={20} className="text-gray-300" /></div>
                   }
                   <div className="flex-1 min-w-0">
