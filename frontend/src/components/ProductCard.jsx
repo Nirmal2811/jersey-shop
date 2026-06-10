@@ -90,16 +90,13 @@ export default function ProductCard({ product }) {
 
         {/* Info */}
         <div className="pt-3 pb-1 flex flex-col">
-          {/* Fixed 1-line height so cards without a club name stay aligned */}
-          <p className="text-[10px] font-bold tracking-widest text-gray-400 uppercase mb-0.5 h-4 truncate">
-            {product.club || ''}
+          <p className="text-[10px] font-bold tracking-widest text-gray-400 uppercase mb-0.5 h-4 sm:h-auto truncate">
+            {product.club || ' '}
           </p>
-          {/* Fixed 2-line height so price/sizes always start at the same row */}
-          <h3 className="text-sm font-semibold text-black leading-tight line-clamp-2 min-h-[2.5rem] group-hover:text-orange-500 transition-colors">
+          <h3 className="text-sm font-semibold text-black leading-tight line-clamp-2 min-h-[2.5rem] sm:min-h-0 group-hover:text-orange-500 transition-colors">
             {product.name}
           </h3>
-          {/* Fixed 1-line height for rating row */}
-          <div className="flex items-center gap-1 mt-1 h-4">
+          <div className="flex items-center gap-1 mt-1 h-4 sm:h-auto">
             {product.rating > 0 && (
               <>
                 {Array.from({ length: 5 }).map((_, i) => (
