@@ -89,27 +89,27 @@ export default function ProductCard({ product }) {
         </div>
 
         {/* Info */}
-        <div className="pt-3 pb-1 flex flex-col">
-          <p className="text-[10px] font-bold tracking-widest text-gray-400 uppercase mb-0.5 h-4 sm:h-auto truncate">
-            {product.club || ' '}
-          </p>
-          <h3 className="text-sm font-semibold text-black leading-tight line-clamp-2 min-h-[2.5rem] sm:min-h-0 group-hover:text-orange-500 transition-colors">
+        <div className="pt-3 pb-1">
+          {product.club && (
+            <p className="text-[10px] font-bold tracking-widest text-gray-400 uppercase mb-0.5">
+              {product.club}
+            </p>
+          )}
+          <h3 className="text-sm font-semibold text-black leading-tight line-clamp-2 group-hover:text-orange-500 transition-colors">
             {product.name}
           </h3>
-          <div className="flex items-center gap-1 mt-1 h-4 sm:h-auto">
-            {product.rating > 0 && (
-              <>
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    size={10}
-                    className={i < Math.round(product.rating) ? 'text-orange-500 fill-orange-500' : 'text-gray-300'}
-                  />
-                ))}
-                <span className="text-[10px] text-gray-400">({product.reviews_count || 0})</span>
-              </>
-            )}
-          </div>
+          {product.rating > 0 && (
+            <div className="flex items-center gap-1 mt-1">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star
+                  key={i}
+                  size={10}
+                  className={i < Math.round(product.rating) ? 'text-orange-500 fill-orange-500' : 'text-gray-300'}
+                />
+              ))}
+              <span className="text-[10px] text-gray-400">({product.reviews_count || 0})</span>
+            </div>
+          )}
           <div className="flex items-center gap-2 mt-1.5">
             <span className="text-sm font-black text-black">₹{product.price?.toLocaleString('en-IN')}</span>
             {product.original_price && (
