@@ -1,14 +1,21 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CheckCircle, XCircle, X } from 'lucide-react'
 import { hideToast } from '../store/slices/uiSlice'
 
-const CART_W = 448 // max-w-md in px
+const CART_W = 448
 
 export default function Toast() {
   const dispatch = useDispatch()
   const { toast, cartOpen } = useSelector((s) => s.ui)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 640)
+
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 640)
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
+  }, [])
 
   useEffect(() => {
     if (toast) {
@@ -17,21 +24,24 @@ export default function Toast() {
     }
   }, [toast, dispatch])
 
-  // Center within the area not covered by the cart drawer
-  const leftStyle = cartOpen
-    ? { left: `calc((100vw - ${CART_W}px) / 2)`, transform: 'translateX(-50%)' }
-    : { left: '50%', transform: 'translateX(-50%)' }
+  const positionStyle = isMobile
+    ? { left: '50%', transform: 'translateX(-50%)' }
+    : cartOpen
+      ? { left: `calc((100vw - ${CART_W}px) / 2)`, transform: 'translateX(-50%)' }
+      : { left: '50%', transform: 'translateX(-50%)' }
+
+  const yDir = isMobile ? 40 : -40
 
   return (
     <AnimatePresence>
       {toast && (
         <motion.div
-          initial={{ y: -40, opacity: 0 }}
+          initial={{ y: yDir, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -40, opacity: 0 }}
+          exit={{ y: yDir, opacity: 0 }}
           transition={{ duration: 0.25 }}
-          style={leftStyle}
-          className="fixed top-[6.5rem] z-[200] flex items-center gap-3 bg-black text-white px-5 py-3 shadow-2xl min-w-[240px]"
+          style={positionStyle}
+          className="fixed z-[200] flex items-center gap-3 bg-black text-white px-5 py-3 shadow-2xl min-w-[240px] bottom-6 sm:bottom-auto sm:top-[6.5rem]"
         >
           {toast.type === 'error' ? (
             <XCircle size={18} className="text-red-400 flex-shrink-0" />
