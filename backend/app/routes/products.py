@@ -6,7 +6,7 @@ from .. import db as _db
 products_bp = Blueprint('products', __name__)
 
 
-@products_bp.route('/', methods=['GET'])
+@products_bp.route('/', methods=['GET'], strict_slashes=False)
 def get_products():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 20, type=int)

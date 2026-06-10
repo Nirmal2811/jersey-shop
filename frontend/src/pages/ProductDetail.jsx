@@ -144,7 +144,7 @@ export default function ProductDetail() {
         return data
       })
       .then((p) =>
-        api.get('/products', { params: { category: p.category, per_page: 7 } })
+        api.get('/products/', { params: { category: p.category, per_page: 7 } })
           .then(({ data }) => {
             const items = (data.products || data).filter((x) => x.id !== p.id).slice(0, 6)
             setRelated(items)

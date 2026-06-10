@@ -25,7 +25,7 @@ export default function FeaturedProducts({
     if (category) params.category = category
 
     setLoading(true)
-    api.get('/products', { params })
+    api.get('/products/', { params })
       .then(({ data }) => setProducts(data.products || []))
       .catch(() => setProducts([]))
       .finally(() => setLoading(false))
