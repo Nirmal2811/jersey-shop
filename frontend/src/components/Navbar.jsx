@@ -200,28 +200,15 @@ export default function Navbar() {
     setActiveMenu(null)
   }, [location.pathname])
 
-  // Scroll lock — works on iOS Safari too
+  // Scroll lock — overflow hidden on html keeps sticky header intact
   useEffect(() => {
+    const html = document.documentElement
     if (mobileOpen) {
-      const scrollY = window.scrollY
-      document.body.style.overflow = 'hidden'
-      document.body.style.position = 'fixed'
-      document.body.style.top = `-${scrollY}px`
-      document.body.style.width = '100%'
+      html.style.overflow = 'hidden'
     } else {
-      const top = document.body.style.top
-      document.body.style.overflow = ''
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
-      window.scrollTo(0, parseInt(top || '0') * -1)
+      html.style.overflow = ''
     }
-    return () => {
-      document.body.style.overflow = ''
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
-    }
+    return () => { html.style.overflow = '' }
   }, [mobileOpen])
 
   const activeItem = NAV_ITEMS.find((i) => i.label === activeMenu)
