@@ -214,159 +214,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Mobile full-height side menu ── */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              onClick={() => { setMobileOpen(false); setMobileSub(null) }}
-              className="fixed inset-0 bg-black/50 z-[60] lg:hidden"
-            />
-
-            {/* Slide-in panel */}
-            <motion.div
-              initial={{ x: '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ type: 'tween', duration: 0.28, ease: 'easeOut' }}
-              className="fixed top-0 left-0 h-full w-[82vw] max-w-[340px] bg-white z-[70] lg:hidden flex flex-col"
-            >
-              {/* Panel header */}
-              <div className="flex items-center justify-between px-4 py-4 border-b border-gray-100">
-                <Link to="/" onClick={() => setMobileOpen(false)}>
-                  <img src="/images/Dribble Studio.png" alt="Logo" className="h-8 w-auto object-contain" style={{ filter: 'invert(1)' }} />
-                </Link>
-                <button
-                  onClick={() => { setMobileOpen(false); setMobileSub(null) }}
-                  className="p-1 text-gray-700"
-                >
-                  <X size={22} />
-                </button>
-              </div>
-
-              {/* Scrollable body */}
-              <div className="flex-1 overflow-y-auto">
-                {/* Main nav items */}
-                <ul className="divide-y divide-gray-100">
-                  {NAV_ITEMS.map((item) => (
-                    <li key={item.label}>
-                      {item.path ? (
-                        <Link
-                          to={item.path}
-                          onClick={() => setMobileOpen(false)}
-                          className={`flex items-center justify-between px-5 py-4 text-sm font-semibold tracking-wide ${
-                            item.accent ? 'text-orange-500' : 'text-gray-900'
-                          }`}
-                        >
-                          {item.label}
-                          <ChevronRight size={16} className="text-gray-400" />
-                        </Link>
-                      ) : (
-                        <>
-                          <button
-                            onClick={() => setMobileSub(mobileSub === item.label ? null : item.label)}
-                            className="flex items-center justify-between w-full px-5 py-4 text-sm font-semibold tracking-wide text-gray-900"
-                          >
-                            {item.label}
-                            <ChevronDown
-                              size={16}
-                              className={`text-gray-400 transition-transform duration-200 ${
-                                mobileSub === item.label ? 'rotate-180' : ''
-                              }`}
-                            />
-                          </button>
-
-                          <AnimatePresence>
-                            {mobileSub === item.label && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.2 }}
-                                className="overflow-hidden bg-gray-50"
-                              >
-                                {item.mega.columns.map((col) => (
-                                  <div key={col.title} className="px-5 py-3">
-                                    <p className={`text-[10px] font-black tracking-widest mb-2 ${
-                                      col.highlight ? 'text-orange-500' : 'text-gray-400'
-                                    }`}>
-                                      {col.title}
-                                    </p>
-                                    {col.links.map((link) => (
-                                      <Link
-                                        key={link.label}
-                                        to={link.path}
-                                        onClick={() => setMobileOpen(false)}
-                                        className="block text-sm text-gray-700 py-1.5 hover:text-orange-500 transition-colors"
-                                      >
-                                        {link.label}
-                                      </Link>
-                                    ))}
-                                  </div>
-                                ))}
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Secondary links */}
-                <div className="border-t border-gray-200 mt-2">
-                  {SECONDARY_LINKS.map((link) => (
-                    <Link
-                      key={link.label}
-                      to={link.path}
-                      onClick={() => setMobileOpen(false)}
-                      className="block px-5 py-3.5 text-sm text-gray-600 hover:text-orange-500 transition-colors border-b border-gray-100"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Auth buttons pinned at bottom */}
-              <div className="px-4 py-5 border-t border-gray-100 space-y-2.5">
-                {isAuthenticated ? (
-                  <Link
-                    to="/account"
-                    onClick={() => setMobileOpen(false)}
-                    className="block w-full bg-black text-white text-center text-sm font-black tracking-widest py-3.5"
-                  >
-                    MY ACCOUNT
-                  </Link>
-                ) : (
-                  <>
-                    <Link
-                      to="/auth"
-                      onClick={() => setMobileOpen(false)}
-                      className="block w-full bg-black text-white text-center text-sm font-black tracking-widest py-3.5"
-                    >
-                      LOGIN
-                    </Link>
-                    <Link
-                      to="/auth?tab=register"
-                      onClick={() => setMobileOpen(false)}
-                      className="block w-full border-2 border-black text-black text-center text-sm font-black tracking-widest py-3"
-                    >
-                      JOIN US
-                    </Link>
-                  </>
-                )}
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
       <header className="sticky top-0 z-50">
         <div className="relative" onMouseLeave={() => setActiveMenu(null)}>
 
@@ -376,11 +223,11 @@ export default function Navbar() {
               {/* ── Mobile left: burger + search ── */}
               <div className="flex items-center gap-0.5 lg:hidden">
                 <button
-                  onClick={() => setMobileOpen(!mobileOpen)}
+                  onClick={() => { setMobileOpen(!mobileOpen); setMobileSub(null) }}
                   className="p-2 text-white"
                   aria-label="Menu"
                 >
-                  <Menu size={22} />
+                  {mobileOpen ? <X size={22} /> : <Menu size={22} />}
                 </button>
                 <button
                   onClick={() => dispatch(openSearch())}
@@ -522,6 +369,132 @@ export default function Navbar() {
 
             </div>
           </nav>
+
+          {/* ── Mobile full-screen dropdown menu ── */}
+          <AnimatePresence>
+            {mobileOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22 }}
+                className="lg:hidden fixed inset-x-0 top-14 bottom-0 bg-white z-40 flex flex-col overflow-hidden"
+              >
+                {/* Scrollable body */}
+                <div className="flex-1 overflow-y-auto">
+                  {/* Main nav items */}
+                  <ul className="divide-y divide-gray-100">
+                    {NAV_ITEMS.map((item) => (
+                      <li key={item.label}>
+                        {item.path ? (
+                          <Link
+                            to={item.path}
+                            onClick={() => setMobileOpen(false)}
+                            className={`flex items-center justify-between px-5 py-4 text-sm font-semibold tracking-wide ${
+                              item.accent ? 'text-orange-500' : 'text-gray-900'
+                            }`}
+                          >
+                            {item.label}
+                            <ChevronRight size={16} className="text-gray-400" />
+                          </Link>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() => setMobileSub(mobileSub === item.label ? null : item.label)}
+                              className="flex items-center justify-between w-full px-5 py-4 text-sm font-semibold tracking-wide text-gray-900"
+                            >
+                              {item.label}
+                              <ChevronDown
+                                size={16}
+                                className={`text-gray-400 transition-transform duration-200 ${
+                                  mobileSub === item.label ? 'rotate-180' : ''
+                                }`}
+                              />
+                            </button>
+                            <AnimatePresence>
+                              {mobileSub === item.label && (
+                                <motion.div
+                                  initial={{ height: 0 }}
+                                  animate={{ height: 'auto' }}
+                                  exit={{ height: 0 }}
+                                  transition={{ duration: 0.18 }}
+                                  className="overflow-hidden bg-gray-50"
+                                >
+                                  {item.mega.columns.map((col) => (
+                                    <div key={col.title} className="px-5 py-3">
+                                      <p className={`text-[10px] font-black tracking-widest mb-2 ${
+                                        col.highlight ? 'text-orange-500' : 'text-gray-400'
+                                      }`}>
+                                        {col.title}
+                                      </p>
+                                      {col.links.map((link) => (
+                                        <Link
+                                          key={link.label}
+                                          to={link.path}
+                                          onClick={() => setMobileOpen(false)}
+                                          className="block text-sm text-gray-600 py-1.5 hover:text-orange-500 transition-colors"
+                                        >
+                                          {link.label}
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  ))}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Secondary links */}
+                  <div className="mt-2 border-t border-gray-200">
+                    {SECONDARY_LINKS.map((link) => (
+                      <Link
+                        key={link.label}
+                        to={link.path}
+                        onClick={() => setMobileOpen(false)}
+                        className="block px-5 py-3.5 text-sm text-gray-500 hover:text-orange-500 transition-colors border-b border-gray-100"
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Auth buttons pinned at bottom */}
+                <div className="px-4 py-4 border-t border-gray-100 space-y-2.5 bg-white">
+                  {isAuthenticated ? (
+                    <Link
+                      to="/account"
+                      onClick={() => setMobileOpen(false)}
+                      className="block w-full bg-black text-white text-center text-sm font-black tracking-widest py-3.5"
+                    >
+                      MY ACCOUNT
+                    </Link>
+                  ) : (
+                    <>
+                      <Link
+                        to="/auth"
+                        onClick={() => setMobileOpen(false)}
+                        className="block w-full bg-black text-white text-center text-sm font-black tracking-widest py-3.5"
+                      >
+                        LOGIN
+                      </Link>
+                      <Link
+                        to="/auth?tab=register"
+                        onClick={() => setMobileOpen(false)}
+                        className="block w-full border-2 border-black text-black text-center text-sm font-black tracking-widest py-3"
+                      >
+                        JOIN US
+                      </Link>
+                    </>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Desktop mega menu */}
           <AnimatePresence>
