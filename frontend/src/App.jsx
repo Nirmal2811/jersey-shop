@@ -107,8 +107,10 @@ export default function App() {
         <Route path="*" element={
           <SmoothScroll>
             <div className="min-h-screen flex flex-col">
-              <AnnouncementBar />
-              <Navbar />
+              <div className="sticky top-0 z-50">
+                <AnnouncementBar />
+                <Navbar />
+              </div>
               <SearchModal />
               <CartDrawer />
               <Toast />

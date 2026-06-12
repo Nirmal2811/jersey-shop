@@ -215,7 +215,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50">
+      <header className="relative z-50">
         <div className="relative" onMouseLeave={() => setActiveMenu(null)}>
 
           <nav className="bg-black">
@@ -379,7 +379,7 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.22 }}
-                className="lg:hidden fixed inset-x-0 top-14 bottom-0 bg-white z-40 flex flex-col overflow-hidden"
+                className="lg:hidden fixed inset-x-0 top-[96px] bottom-0 bg-white z-40 flex flex-col overflow-hidden"
               >
                 {/* Scrollable body */}
                 <div className="flex-1 overflow-y-auto">
